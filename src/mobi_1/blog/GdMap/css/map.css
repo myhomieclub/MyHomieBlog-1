@@ -1,0 +1,249 @@
+html,
+body {
+     height: 100%;
+     width: 100%;
+     overflow: hidden;
+     padding: 0;
+     margin: 0;
+ }
+ li {
+     list-style: none;
+ }
+
+ .amap-geo{
+     display: none;
+ }
+ 
+ #page {
+     width: 100%;
+     height: 100%;
+     position: fixed;
+     display: -webkit-flex;
+     -webkit-flex-direction: column;
+     overflow: hidden;
+ }
+ 
+ #container {
+     -webkit-flex: 1;
+ }
+ 
+ #panel, #one_panel {
+     -webkit-flex: 0 0 auto;
+     border-top: 1px solid #ccc;
+     position: relative;
+     z-index: 999;
+     -webkit-transition: all 0.2s;
+     max-height: 20%;
+     overflow-y: scroll;
+ }
+ 
+ .hidden {
+     display: none;
+ }
+
+ #submit {
+     position: absolute;
+     right: 1%;
+     top: 2%;
+     z-index: 999;
+ }
+
+ #showHideBtn {
+     display: block;
+     position: absolute;
+     width: 63px;
+     height: 32px;
+     text-align: center;
+     margin: 0 auto;
+     left: 0;
+     right: 0;
+     top: -25px;
+ }
+ 
+ #showHideBtn:after,
+ #showHideBtn:before {
+     content: "";
+     width: 0;
+     height: 0;
+     position: absolute;
+     left: 0;
+     right: 0;
+     margin: auto;
+     cursor: pointer;
+ }
+ 
+ #showHideBtn:before {
+     width: 60px;
+     height: 30px;
+     background: rgba(255, 255, 255, 0.9);
+     top: 0;
+     border-radius: 30px 30px 0 0;
+     border: 1px solid #ccc;
+     border-bottom: 0;
+ }
+ 
+ #showHideBtn:after {
+     content: "";
+     top: 7px;
+     border: 10px solid rgba(255, 0, 0, 0);
+     z-index: 99999;
+     border-top-color: #ccc;
+     /* -webkit-transition: all 0.2s;*/
+ }
+ 
+ #poiList {
+     -webkit-overflow-scrolling: touch;
+     width: 100%;
+     height: 100%;
+     position: relative;
+     background: #fff;
+ }
+ 
+ #poiList .amap_lib_placeSearch {
+     border: none;
+ }
+ 
+ #panel .amap_lib_placeSearch .pageLink {
+     font-size: 120%;
+     margin: 0 3px;
+ }
+ 
+ #searchBox {
+     position: fixed;
+     width: 90%;
+     margin: 0 auto;
+     left: 0;
+     right: 0;
+     z-index: 999;
+     top: 15px;
+     height: 30px;
+ }
+ 
+ #tipinput {
+     width: 100%;
+     height: 30px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     font-size: 16px;
+     line-height: 30px;
+     padding: 0 7px;
+     box-sizing: border-box;
+ }
+ 
+ #clearSearchBtn {
+     position: absolute;
+     right: 0;
+     top: 0;
+     margin: auto;
+     width: 20px;
+     height: 20px;
+     padding: 5px;
+     text-align: center;
+     vertical-align: middle;
+     font-size: 14px;
+     color: #999;
+ }
+ 
+ #clearSearchBtn .del {
+     background: #eee;
+     border-radius: 12px;
+     width: 100%;
+     height: 100%;
+     cursor: pointer;
+ }
+ 
+ #page.searching #clearSearchBtn {
+     display: none;
+ }
+ 
+ #loader {
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     z-index: 1;
+     margin: -75px 0 0 -75px;
+     border: 16px solid #eee;
+     border-radius: 50%;
+     border-top: 16px solid #0b83ea;
+     width: 120px;
+     height: 120px;
+     -webkit-animation: spin 2s linear infinite;
+     animation: spin 2s linear infinite;
+     display: none;
+ }
+ 
+ @-webkit-keyframes spin {
+     0% {
+         -webkit-transform: rotate(0deg);
+     }
+     100% {
+         -webkit-transform: rotate(360deg);
+     }
+ }
+ 
+ @keyframes spin {
+     0% {
+         transform: rotate(0deg);
+     }
+     100% {
+         transform: rotate(360deg);
+     }
+ }
+ 
+ .searching #loader {
+     display: block;
+ }
+ 
+ .searching #page {
+     filter: grayscale(1);
+     opacity: 0.5;
+ }
+ 
+ #panel.empty #showHideBtn {
+     display: none;
+ }
+ 
+ #emptyTip {
+     display: none;
+ }
+ 
+ #panel.empty #emptyTip {
+     display: block;
+     position: relative;
+     background: #fff;
+     width: 100%;
+     text-align: center;
+     padding: 30px 0;
+     color: #666;
+ }
+
+ .poi-more{
+    display: none!important;
+ }
+
+.select{
+     width: 40%;
+     position: relative;
+     left: 40%;
+}
+
+.button-group{
+     position: absolute;
+     z-index: 1;
+     right: 15%;
+     bottom: 5%;
+}
+
+.button {
+     font-size:9pt;
+     color: #003399;
+     border: #93bee2 1px solid;
+     border-radius: 5px;
+     background-color: #e8f4ff;
+     width:60px;
+     height:22px;
+}
+
+ .disableBth {
+     background-color: #ffffff;
+ }
