@@ -416,15 +416,15 @@ function clearPics(){
 </div>
 <div class="czhi clearfloat box-s" id="old_price" >
 <p class="dtit">Old Price ¥</p>
-<input type="number"  value="" name="original_price" style="-webkit-user-select: text" placeholder="(optional)" />
+<input type="tel"  value="" name="original_price" style="-webkit-user-select: text" placeholder="(optional)" />
 </div>
 <div class="czhi clearfloat box-s" id="new_price">
 <p class="dtit">New Price ¥</p>
-<input type="number"  value="" name="current_price" style="-webkit-user-select: text" placeholder="(optional)" />
+<input type="tel"  value="" name="current_price" style="-webkit-user-select: text" placeholder="(optional)" />
 </div>
 <div class="czhi clearfloat box-s" id="sqm"  >
 <p class="dtit">SQM / ㎡</p>
-<input type="number"  value="" name="sqm" style="-webkit-user-select: text" placeholder="(Necessary for Rent)" />
+<input type="tel"  value="" name="sqm" style="-webkit-user-select: text" placeholder="(Necessary for Rent)" />
 </div>
 
 <div class="czhi clearfloat box-s" id="location_id" >
