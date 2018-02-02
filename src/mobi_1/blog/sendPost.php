@@ -37,7 +37,7 @@ Send Post
 
 
 <?php
-    
+    @session_start();
     function httpGet($url, $data=array(), $header=array(), $timeout=30){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
