@@ -61,14 +61,6 @@ $userid=$_SESSION['userid'];
     }
 
 
-    $admin_check="select * from admin where userid='$userid'";
-
-    $rqst_admin=mysql_query($admin_check);
-    $result_admin=mysql_fetch_array($rqst_admin,MYSQL_ASSOC);
-    $id_admin=$result_admin['id'];
-    if ($id_admin!='')  {$isadmin=true;$_SESSION['isadmin']='1';}
-    else {$isadmin=false;}
-
 
 mysql_close();
 
@@ -312,7 +304,8 @@ mysql_close();
 			    					<i class="iconfont icon-jiantou1 fr"></i>
 			    				</a>
 			    			</li>
-                            <?php if ($isadmin==true){ ?>
+
+                            <?php if ($_SESSION['isadmin']=='1'){ ?>
                             <li class="box-s">
                                 <a href="admin_functions.php">
                                     <p class="fl">Admin Management</p>

@@ -416,15 +416,15 @@ function clearPics(){
 </div>
 <div class="czhi clearfloat box-s" id="old_price" >
 <p class="dtit">Old Price ¥</p>
-<input type="text"  value="" name="original_price" style="-webkit-user-select: text" placeholder="(optional)" />
+<input type="number"  value="" name="original_price" style="-webkit-user-select: text" placeholder="(optional)" />
 </div>
 <div class="czhi clearfloat box-s" id="new_price">
 <p class="dtit">New Price ¥</p>
-<input type="text"  value="" name="current_price" style="-webkit-user-select: text" placeholder="(optional)" />
+<input type="number"  value="" name="current_price" style="-webkit-user-select: text" placeholder="(optional)" />
 </div>
 <div class="czhi clearfloat box-s" id="sqm"  >
 <p class="dtit">SQM / ㎡</p>
-<input type="text"  value="" name="sqm" style="-webkit-user-select: text" placeholder="(Necessary for Rent)" />
+<input type="number"  value="" name="sqm" style="-webkit-user-select: text" placeholder="(Necessary for Rent)" />
 </div>
 
 <div class="czhi clearfloat box-s" id="location_id" >
@@ -482,7 +482,60 @@ LINE-HEIGHT:   normal}
 <script type="text/javascript">
 
 
+    (function($, doc) {
+        $.init();
+        $.ready(function() {
+            var userPicker = new $.PopPicker();
+            userPicker.setData([{
+                value: '2nd-hand',
+                text: '2nd-hand'
+            }
+            <?php
+                if ($_SESSION['isadmin']=='1'){
 
+                ?>
+                , {
+                    value: 'Recommended',
+                    text: 'Recommended'
+                }
+                <?php
+                }
+
+                ?>
+            , {
+                value: 'Q&A',
+                text: 'Q&A'
+            },  {
+                value: 'Event',
+                text: 'Event'
+            }, {
+                value: 'Marketing',
+                text: 'Marketing'
+            }, {
+                value: 'Others',
+                text: 'Others'
+            }
+                /*, {
+                 value: 'Rental Info',
+                 text: 'Rental Info'
+                 },{
+                 value: 'Internship',
+                 text: 'Internship'
+                 }*/
+            ]);
+            var showUserPickerButton = doc.getElementById('diy_select_category');
+            var userResult = doc.getElementById('userResult');
+            showUserPickerButton.addEventListener('tap', function(event) {
+                userPicker.show(function(items) {
+                    document.getElementById('userResult').value =items[0].value;
+                    document.getElementById('categories').value=items[0].value;
+                    appear();
+                });
+            }, false);
+
+
+        });
+    })(mui, document);
 
 
 
