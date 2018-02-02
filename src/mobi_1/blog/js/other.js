@@ -460,47 +460,7 @@ function toshare(){
 	});
 })(mui, document);
 */
-(function($, doc) {
-    $.init();
-    $.ready(function() {
-        var userPicker = new $.PopPicker();
-        userPicker.setData([{
-            value: '2nd-hand',
-            text: '2nd-hand'
-        }, {
-            value: 'Recommended',
-            text: 'Recommended'
-        }, {
-            value: 'Q&A',
-            text: 'Q&A'
-        },  {
-            value: 'Event',
-            text: 'Event'
-        }, {
-            value: 'Marketing',
-            text: 'Marketing'
-        }
-        /*, {
-            value: 'Rental Info',
-            text: 'Rental Info'
-        },{
-            value: 'Internship',
-            text: 'Internship'
-        }*/
-		]);
-        var showUserPickerButton = doc.getElementById('diy_select_category');
-        var userResult = doc.getElementById('userResult');
-        showUserPickerButton.addEventListener('tap', function(event) {
-            userPicker.show(function(items) {
-                document.getElementById('userResult').value =items[0].value;
-                document.getElementById('categories').value=items[0].value;
-                appear();
-            });
-        }, false);
 
-
-    });
-})(mui, document);
 /*
 (function($, doc) {
 	$.init();
