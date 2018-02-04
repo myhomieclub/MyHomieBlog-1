@@ -121,7 +121,7 @@ $resource=mysql_query($query_get_posts,$conn);
         <li  id="Categorytw2" onclick="Categorytw(this);mytest(this)">Recommendations</li>
         <li  id="Categorytw3" onclick="Categorytw(this);mytest(this)">Q&A</li>
         <li  id="Categorytw4" onclick="Categorytw(this);mytest(this)">Marketing</li>
-        <li  id="Categorytw5" onclick="Categorytw(this);mytest(this)">Internship</li>
+        <li  id="Categorytw5" onclick="Categorytw(this);mytest(this)">Others</li>
     </ul>
     <ul class="Category-t" id="Categoryt">
         <li onclick="Categoryt(this);location.href='index.php?category=2nd-hand';">Any Goods</li>
@@ -162,7 +162,7 @@ $resource=mysql_query($query_get_posts,$conn);
     </ul>
 
     <ul class="Category-t" id="Categoryt5">
-        <li onclick="Categoryt5(this);location.href='index.php?category=Intern';">Any Internship</li>
+        <li onclick="Categoryt5(this);location.href='index.php?category=Others';">Others</li>
     </ul>
 
     <!--<ul class="Category-t" id="Categoryt5">

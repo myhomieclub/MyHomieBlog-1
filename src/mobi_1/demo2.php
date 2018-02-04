@@ -180,6 +180,15 @@ if (mysql_num_rows($rqst) == 0) {
 
 
 
+    $admin_check="select * from admin where userid='$userid'";
+
+    $rqst_admin=mysql_query($admin_check);
+    $result_admin=mysql_fetch_array($rqst_admin,MYSQL_ASSOC);
+    $id_admin=$result_admin['id'];
+    if ($id_admin!='')  {$_SESSION['isadmin']='1';}
+
+
+
     $_SESSION["userid"] = $userid;
     $_SESSION["password"] = $password;
     $_SESSION["headimg"] = $headimg;

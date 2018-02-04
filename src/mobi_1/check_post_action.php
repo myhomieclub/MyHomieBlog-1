@@ -26,7 +26,7 @@ if ($_SESSION['isadmin']=='1') {
 }
 
 mysql_close();
-header("location:center.php");
+header("location:check_posts.php");
 
 ?>
 
