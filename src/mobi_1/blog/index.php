@@ -449,6 +449,38 @@ $resource=mysql_query($query_get_posts,$conn);
         </div>
     </div>
 </div>
+<footer id="footer">
+    <div>
+        <a href="../index.php">
+            <div class="icon i-1"></div>
+            <p>Home</p>
+        </a>
+    </div>
+    <div>
+        <a href="index.php">
+            <div class="icon i-5"></div>
+            <p>Blog</p>
+        </a>
+    </div>
+    <div>
+        <a href="sendPost.php">
+            <div class="icon i-2"></div>
+            <p>Post</p>
+        </a>
+    </div>
+    <div>
+        <a href="../favorite_records.php">
+            <div class="icon i-3"></div>
+            <p>Favorite</p>
+        </a>
+    </div>
+    <div>
+        <a href="../center.php">
+            <div class="icon i-4"></div>
+            <p>Me</p>
+        </a>
+    </div>
+</footer>
 <input type="hidden" id="time" value="0">
 </body>
 <script src="js/other.js" type="text/javascript"></script>
