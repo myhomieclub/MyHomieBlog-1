@@ -24,14 +24,14 @@ var loadScript = function(url, callback){
     } 
     script.src=url; 
     document.getElementsByTagName('head')[0].appendChild(script); 
-}
+};
 
 //加载js
 loadScript("http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js", function(){
     loadScript("http://webapi.amap.com/maps?v=1.4.2&key=b0446b3b39bdac2770722ebaacbcad94&plugin=AMap.CitySearch", function(){
         getCity();
     })
-})
+});
 
 /**
  * [getCity 获取用户所在城市]
@@ -54,15 +54,29 @@ var getCity = function(){
                     cityinfo = cityinfo.substring(0, len - 1);
                 }
                 var en_cityinfo = translate(cityinfo);
-                //输出用户所在的城市
-                console.log(en_cityinfo);
-                            $("#locationCity").html(en_cityinfo);
+                var position = result.rectangle.split(';')[0];
+                var lng = position.split(',')[0];
+                var lat = position.split(',')[1];
+                //将用户地址信息存储到session中
+                $.ajax({
+                    url: 'blog/GdMap/uploadAddress.php',
+                    type: 'POST',
+                    dataType: 'text',
+                    data: {address: en_cityinfo, lng: lng, lat: lat}
+                })
+                    .done(function(returnValue) {
+                        console.log(returnValue);
+                    })
+                    .fail(function(msg) {
+                        console.log(msg);
+                    });
+                $("#locationCity").html(en_cityinfo);
             }
         } else {
             return result.info;
         }
     });
-}
+};
 
 /**
  * [translate 翻译]
@@ -87,4 +101,4 @@ var translate = function(q){
         console.log(msg);
     });
     return dst;
-}
+};

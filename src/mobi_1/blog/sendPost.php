@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
 <link rel="stylesheet" type="text/css" href="css/mui.picker.min.css"/>
-<script src="js/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/iscroll.js"></script>
 <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
@@ -37,7 +37,7 @@ Send Post
 
 
 <?php
-    
+
     function httpGet($url, $data=array(), $header=array(), $timeout=30){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
@@ -47,17 +47,17 @@ Send Post
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-        
+
         $response = curl_exec($ch);
-        
+
         if($error=curl_error($ch)){
             die($error);
         }
-        
+
         curl_close($ch);
-        
+
         return $response;
-        
+
     }
     function createNonceStr($length = 16) {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -68,16 +68,16 @@ Send Post
         return $str;
     }
     function get_access_token($appid,$appsecret){
-        
+
         //echo "get access token";
-        
+
         $file_data=file_get_contents('access_token.json');
         if(!$file_data) {
-            
+
             $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $appid . '&secret=' . $appsecret;
             $rurl = file_get_contents($url);
             $rurl = json_decode($rurl, true);
-            
+
             $data = array();
             $data['access_token'] = $rurl['access_token'];
             $data['created_time'] = time() ;
@@ -85,7 +85,7 @@ Send Post
             $fp = fopen("access_token.json", "w");
             fwrite($fp, $jsonStr);
             fclose($fp);
-            
+
             if(array_key_exists('errcode',$rurl)){
                 //echo "<br> failed <br>";
                 //echo "errcode<br>".$rurl['errcode'];
@@ -95,17 +95,17 @@ Send Post
                 //echo "get access1 -> $access_token";
                 return $access_token;
             }
-            
+
         }
         else {
-            
+
             $file_data_arr=json_decode($file_data,true);
             if ((time()-$file_data_arr['created_time'])>6800)
             {
                 $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $appid . '&secret=' . $appsecret;
                 $rurl = file_get_contents($url);
                 $rurl = json_decode($rurl, true);
-                
+
                 $data = array();
                 $data['access_token'] = $rurl['access_token'];
                 $data['created_time'] = time();
@@ -113,7 +113,7 @@ Send Post
                 $fp = fopen("access_token.json", "w");
                 fwrite($fp, $jsonStr);
                 fclose($fp);
-                
+
                 if(array_key_exists('errcode',$rurl)){
                     //echo "<br> failed <br>";
                     //echo "errcode<br>".$rurl['errcode'];
@@ -129,16 +129,16 @@ Send Post
                 //echo "get access3 -> $s";
                 return $s;
             }
-            
+
         }
-        
-        
+
+
     }
     function getJsApiTicket() {
-        
+
         global $accessToken;
-        
-        
+
+
         $appid="wxbdc7bc1e209bdac4";
         $secret="3273c0aed84cceb42125867afbced999";
         $data = json_decode(file_get_contents("jsapi_ticket.json"));
@@ -148,31 +148,31 @@ Send Post
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
         $res = json_decode(httpGet($url));
         $ticket = $res->ticket;
-        
+
         return $ticket;
     }
-    
-    
+
+
     $nonceStr = createNonceStr();
-    
+
     $accessToken='';
-    
+
     // 注意 URL 一定要动态获取，不能 hardcode.
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $jsapiTicket = getJsApiTicket();
     $timestamp = time();
-    
-    
-    
+
+
+
     $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
-    
+
     $signature = sha1($string);
     $signature.='';
-    
-    
+
+
     //echo "times ".$timestamp."<br> noncestr ".$nonceStr."<br> sig ".$signature."<br> url ".$url."<br> ticket ".$jsapiTicket;
-    
+
     ?>
 
 
@@ -184,7 +184,7 @@ Send Post
 opacity: 0;
 position: absolute;
     z-index: 10;
-    
+
 }
 
 </style>
@@ -205,15 +205,15 @@ wx.config({
           'uploadImage',
           'previewImage',
           'downloadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-          
-          
+
+
           });
 var chosenPicNum=0;
 function upload(localIds,i,localChosenPicNum)
 {wx.uploadImage({
-                
-                
-                
+
+
+
                 localId: "" + localIds[i],
                 isShowProgressTips: 1,
                 success: function(res) {
@@ -221,18 +221,18 @@ function upload(localIds,i,localChosenPicNum)
                 setTimeout(console.log("delay "+i),1000);
 
                 //alert("n: "+chosenPicNum);
-                
+
                 if (chosenPicNum==0)
                 {
                 if (i==0) {
-                
+
                 $("#hid_pic1").val(serverId);//alert("1st");
                 }
                 if (i==1) {$("#hid_pic2").val(serverId);//alert("2nd");
                 }
                 if (i==2) {$("#hid_pic3").val(serverId);//alert("3rd");
                 }
-                
+
                 }
                 else if (chosenPicNum==1)
                 {
@@ -250,83 +250,83 @@ function upload(localIds,i,localChosenPicNum)
                 }
                 }
                 else {}
-                
+
                 i++;
                 if (i<localIds.length) upload(localIds,i,localChosenPicNum);
                 else {chosenPicNum+=localChosenPicNum;}
-                
+
                 },
                 fail: function(res){
                 alert("err，msg："+JSON.stringify(res));
                 }
-                
+
                 });
-    
-    
-    
+
+
+
 }
 
 
 function preview(obj){
-    
-    
-    
-    
+
+
+
+
     urls=[];
     if ($("#file_UserPic1").attr('src')!='')
     {
     urls.push($("#file_UserPic1").attr('src'));
-        
+
         if ($("#file_UserPic2").attr('src')!='')
     urls.push($("#file_UserPic2").attr('src'));
-        
+
         if($("#file_UserPic3").attr('src')!='')
     urls.push($("#file_UserPic3").attr('src'));
-    
-       
+
+
             wx.previewImage({
                             current: obj.src,
                             urls: urls
                             });
     }
-    
-    
+
+
 }
 
 
 function chooseImage(){
     // 选择张片
     //alert("choose:");
-    
+
     if (chosenPicNum>=3)
     {
         alert("Max number of pics is 3!");
     }
     else {
-    
+
     wx.chooseImage({
                    count: 3-chosenPicNum, // 默认9
                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                    success: function(res) {
                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                   
-                   
+
+
                    var localChosenPicNum=0;
-                   
-                   
+
+
                    if (localIds[0]!=null) localChosenPicNum++;
                    if (localIds[1]!=null) localChosenPicNum++;
                    if (localIds[2]!=null) localChosenPicNum++;
-                   
-                   
+
+
                    if (chosenPicNum==0)
                    {
                    $("#file_UserPic1").attr('src', localIds[0]);
                    $("#file_UserPic2").attr('src', localIds[1]);
                    $("#file_UserPic3").attr('src', localIds[2]);
                    }
-                   
+
                    // if choose twice/multi :
                    else if (chosenPicNum==1)
                    {
@@ -338,20 +338,20 @@ function chooseImage(){
                    $("#file_UserPic3").attr('src', localIds[0]);
                    }
                    else {}
-                   
+
                    upload(localIds,0,localChosenPicNum);
-                   
-                   
+
+
 
                    },
                    // 上传照片
-                   
+
                    fail: function(res){
                    alert("err，msg："+JSON.stringify(res));
                    }
                    });
-        
-        
+
+
     }
 }
 //https://api.weixin.qq.com/cgi-bin/media/get?access_token=BFZKdUSrzbBDgyijJaGcEEwp18iO_ANlrjzzfssO2pVbOxef0HK2hCqLg3jaSzBpT3vSstpHuMBSU7Z4k6luvWZcuUpkSc4gCfeIkOfHu6g2nJGkCQ7-ytFyQ-avwvNrFSXjAEAYLQ&media_id=Awc7Oso8qZvYqxqmXxNfvi3zI9dAI5lihA14A7NnW7x7ZKTuZgCMOyzwO59DA1dN
@@ -360,20 +360,20 @@ function chooseImage(){
 
 
 function clearPics(){
-    
+
     //alert("3");
-    
+
     $("#file_UserPic1").attr('src', 'img/blank.png?'+Math.random());
     $("#file_UserPic2").attr('src', 'img/blank.png?'+Math.random());
     $("#file_UserPic3").attr('src', 'img/blank.png?'+Math.random());
-    
+
     $("#hid_pic1").val("");
     $("#hid_pic2").val("");
     $("#hid_pic3").val("");
-    
+
     chosenPicNum=0;
-    
-    
+
+
 }
 
 
@@ -496,96 +496,123 @@ document.getElementById("sqm").style.display='none';
 
 
 function appear(){
-    
-    
+
+
     var userResult=document.getElementById("userResult").value;
-    
-    
+
+
     if (userResult!=''){
-        
-        
-        
+
+
+
         if (userResult=="2nd-hand"){
-            
+
             document.getElementById("old_price").style.display='';
             document.getElementById("new_price").style.display='';
             document.getElementById("location_id").style.display='';
             document.getElementById("sqm").style.display='none';
-            
+
         }
-        
+
         else if (userResult=="Event"){
-            
-            
+
+
             document.getElementById("location_id").style.display='';
             document.getElementById("old_price").style.display='none';
             document.getElementById("new_price").style.display='none';
-            
+
             document.getElementById("sqm").style.display='none';
-            
-            
+
+
         }else if (userResult=="Recommended"){
-            
+
             document.getElementById("location_id").style.display='';
             document.getElementById("old_price").style.display='none';
             document.getElementById("new_price").style.display='none';
-            
+
             document.getElementById("sqm").style.display='none';
-            
+
         }
         /*else if (userResult=="Rental Info"){
-            
+
             document.getElementById("sqm").style.display='';
             document.getElementById("location_id").style.display='';
             document.getElementById("old_price").style.display='none';
             document.getElementById("new_price").style.display='';
-            
+
         }else if (userResult=="Internship"){
-            
+
             document.getElementById("location_id").style.display='';
             document.getElementById("old_price").style.display='none';
             document.getElementById("new_price").style.display='none';
             document.getElementById("sqm").style.display='none';
-            
+
         }*/
         else if (userResult=="Marketing"){
-            
+
             document.getElementById("new_price").style.display='';
             document.getElementById("location_id").style.display='';
-            
+
             document.getElementById("sqm").style.display='none';
             document.getElementById("old_price").style.display='none';
-            
+
         }else {
             document.getElementById("old_price").style.display='none';
             document.getElementById("new_price").style.display='none';
             document.getElementById("location_id").style.display='none';
             document.getElementById("sqm").style.display='none';
         }
-        
+
     }
-    
-    
-    
-    
-    
+
+
+    /**
+     * 自动填写用户地址
+     * @date    2018-02-04
+     * @another joseph
+     */
+    if (!$('#location_id').is(":hidden")) {
+        $.ajax({
+            url: 'GdMap/uploadAddress.php',
+            type: 'GET',
+            dataType: 'text'
+        })
+            .done(function(returnValue) {
+                console.log(returnValue);
+                $('#location_id>input').val(returnValue);
+            })
+            .fail(function(msg) {
+                console.log(msg);
+            });
+    }else {
+        console.log("error");
+    }
+
+
+
 }
 
+/**
+ * 用户从地图跳回该页面时显示隐藏列表
+ * @date    2018-02-04
+ * @another joseph
+ */
+appear();
 
 
 function submit_check()
 {
     var title=document.getElementById("title").value;
     var content=document.getElementById("content").value;
-    
+
     var userResult=document.getElementById("userResult").value;
-    
+
     if (userResult=='') alert("Please choose a category! ");
     else if (title=='') alert("Please fill in the title! ");
     else if (content=='') alert("Please fill in the content! ");
     else if (title.length>=30) alert("Title should be less than 30 characters! ");
     else document.forms[0].submit();
-    
+
 }
 
 
