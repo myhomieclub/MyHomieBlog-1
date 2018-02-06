@@ -65,7 +65,7 @@ if ($_SESSION['isadmin']=='1') {
 
     <body>
     <header class="hasManyCity hasManyCitytwo" id="header">
-        <a href="javascript:history.go(-1)" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
+        <a href="admin_functions.php" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
         <div class="header-tit">
             Posts Management
         </div>
@@ -94,16 +94,25 @@ if ($_SESSION['isadmin']=='1') {
                 ?>
 
 
-                <div class="addlist clearfloat">
+                <div class="addlist clearfloat" style="height: auto;border-top: 1px solid #dcdad3;">
                     <div class="top clearfloat box-s">
                         <a href="blog/admin_browse_post.php?postid=<?php echo $postid ?>">
                         <ul>
-                            <li>
+                            <!--li>
                                 <span class="fl"><?php echo $title ?></span>
                                 <span class="fr"><?php echo $time ?></span>
                             </li>
                             <li style="width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
                                 <?php echo $content ?>
+                            </li-->
+
+                            <li style="overflow:hidden">
+                                <img src="<?php echo $row['pic1'] ?>"/>
+                            </li>
+                            <li style="width:45%; ">
+                                <p style="font-size: 18px; color: #000;"><?php echo $title ?></p>
+                                <p style="font-size: 10px; color: #666;height:16px; line-height: 16px;"><?php echo $time ?></p>
+                                <p style="font-size: 14px; color: #111;"><?php echo $content ?></p>
                             </li>
                         </ul>
                         </a>

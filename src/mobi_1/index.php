@@ -79,7 +79,7 @@
 												</span>
 												<span class="icon-desc">2nd-hand</span>
 											</a>
-										</li>
+										</li> 
                                         <li class="icon">
                                             <a href="blog/index.php?category=recommend">
 												<span class="icon-circle">
@@ -89,7 +89,7 @@
                                             </a>
                                         </li>
                                         <li class="icon">
-                                            <a href="blog/index.php?category=question">
+                                            <a href="blog/index.php?category=Q&A">
 												<span class="icon-circle">
 													<img src="img/a1.png">
 												</span>
@@ -97,14 +97,30 @@
                                             </a>
                                         </li>
                                         <li class="icon">
-                                            <a href="blog/index.php?category=skill">
+                                            <a href="blog/index.php?category=Market">
 												<span class="icon-circle">
 													<img src="img/marketing-promote.png">
 												</span>
                                                 <span class="icon-desc">Marketing</span>
                                             </a>
                                         </li>
-                                        <li class="icon">
+										<li class="icon">
+											<a href="blog/index.php?category=Event">
+												<span class="icon-circle">
+													<img src="img/event.png">
+												</span>
+												<span class="icon-desc">Event</span>
+											</a>
+										</li>
+										<li class="icon">
+											<a href="blog/index.php?category=Others">
+												<span class="icon-circle">
+													<img src="img/others.png">
+												</span>
+												<span class="icon-desc">Others</span>
+											</a>
+										</li>
+										<li class="icon">
                                             <a href="hsk_login.html">
 												<span class="icon-circle">
 													<img src="img/test.png">
@@ -112,15 +128,14 @@
                                                 <span class="icon-desc">HSK</span>
                                             </a>
                                         </li>
-
 										<li class="icon">
-											<a href="blog/index.php">
-												<span class="icon-circle">
-													<img src="img/event.png">
+											<a href="translator.html">
+												<span class="icon-circle">												
+													<img src="img/trans.png">
 												</span>
-												<span class="icon-desc">Event</span>
+												<span class="icon-desc">Translator</span>
 											</a>
-										</li>
+										</li>										
 										<!--<li class="icon">
 											<a href="hotel.html">
 												<span class="icon-circle">												
@@ -232,51 +247,40 @@
 							
 				<div id="index" class="page-center-box">
 					<div>				
-						<!--首页限时抢购开始-->
-						<div class="sy_title"><span class="left">2nd-hand Goods</span>
-							<div class="sy_limit_buy_time ">
-								<em class="ico"></em>
-								Recommended | Most Seen
-								<a href="blog/index.php?category=2nd-hand" class="fr morethree ">More&gt;&gt;</a>
-								<!--<span class="time" remaintime="1442800030">
-									<span>00</span>天
-									<span>00</span>时
-									<span>00</span>分
-									<span>00</span>秒
-								</span>-->
-							</div>
-						</div>
-						<div class="sy_limit_buy mb10">
-							<div class="locatLabel_switch swiper-container5 swiper-container-horizontal swiper-container-free-mode swiper-container-android">
-								<div class="swiper-wrapper">
 
-                                    <?php
+                        <div class="sy_title">
+                            <span class="left">2nd-hand Goods</span>
+                            <a href="blog/index.php?category=2nd-hand&sort=seen" class="fr morethree">More&gt;&gt;</a>
+                        </div>
+                        <div class="sy_hot_seller">
+                            <div class="sy_limit_buy mb10">
+                                <div class="locatLabel_switch swiper-container6 swiper-container-horizontal swiper-container-free-mode swiper-container-android">
+                                    <div class="swiper-wrapper">
+
+                                        <?php
+                                        @session_start();
 
 
 
-                                    @session_start();
+                                        require_once("connect.php");
+                                        $secondary_query="select * from post where pic1!='' and valid='1' and check_status='1' and category like '2nd-hand%' order by seen desc limit 0,6";
+                                        $res_sec=mysql_query($secondary_query);
+
+
+                                        while ($row1=mysql_fetch_array($res_sec,MYSQL_ASSOC)) {
 
 
 
-                                    require_once("connect.php");
-                                    $secondary_query="select * from post where valid='1' and check_status='1' and category like '2nd-hand%' order by seen desc limit 0,6";
-                                    $res_sec=mysql_query($secondary_query);
+                                            $postid=$row1['id'];
+                                            $title=$row1['title'];
+                                            $pic1=$row1['pic1'];
+
+                                            ?>
 
 
-                                    while ($row1=mysql_fetch_array($res_sec,MYSQL_ASSOC)) {
-
-
-
-                                        $postid=$row1['id'];
-                                        $title=$row1['title'];
-                                        $pic1=$row1['pic1'];
-
-                                        ?>
-
-
-                                        <div class="box swiper-slide">
+                                            <div class="box swiper-slide">
                                             <a href="blog/singlepage.php?postid=<?php echo $postid  ?>">
-                                                <img src="blog/<?php echo $pic1  ?>" width="" height="">
+                                                <img src="blog/<?php echo $pic1  ?>" width="114" height="114">
                                                 <p class="txt_center overflow_clear"><?php echo $title  ?></p>
                                                 <p class="txt_center fontcl1"><?php echo $row1['current_price']  ?>
                                                     <small class="ml10">
@@ -285,54 +289,21 @@
                                                 </p>
                                             </a>
                                         </div>
+
                                         <?php
+                                        }
 
-
-
-                                    }
-
-?>
-<!--
-
-									<div class="box swiper-slide">
-										<a href="#">
-											<img src="img/thumb_566813906046a.jpg" width="" height="">
-											<p class="txt_center overflow_clear">title</p>
-											<p class="txt_center fontcl1">¥50<small class="ml10"><del class="black9">￥60</del></small></p>
-										</a>
-									</div>
-
-									<div class="box swiper-slide">
-										<a href="#">
-											<img src="img/thumb_566813906046a.jpg" width="" height="">
-											<p class="txt_center overflow_clear">title</p>
-											<p class="txt_center fontcl1">¥50<small class="ml10"><del class="black9">￥60</del></small></p>
-										</a>
-									</div>
-									<div class="box swiper-slide">
-										<a href="#">
-											<img src="img/thumb_566813906046a.jpg" width="" height="">
-											<p class="txt_center overflow_clear">title</p>
-											<p class="txt_center fontcl1">¥50<small class="ml10"><del class="black9">￥60</del></small></p>
-										</a>
-									</div>
-									<div class="box swiper-slide">
-										<a href="#">
-											<img src="img/thumb_566813906046a.jpg" width="" height="">
-											<p class="txt_center overflow_clear">title</p>
-											<p class="txt_center fontcl1">¥50<small class="ml10"><del class="black9">￥60</del></small></p>
-										</a>
-									</div>-->
-								</div>
-							</div>
-	
-						</div>
-						<!--首页限时抢购结束-->
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--热门商家end-->
 											
 						<!--热门商家-->
 						<div class="sy_title">
-							<span class="left">Recommendations</span>
-							<a href="blog/index.php?category=recommend" class="fr morethree">More&gt;&gt;</a>
+							<span class="left">Recommended</span>
+							<a href="blog/index.php?category=recommend&sort=seen" class="fr morethree">More&gt;&gt;</a>
 						</div>
 						<div class="sy_hot_seller">
 							<div class="sy_limit_buy mb10">
@@ -340,7 +311,7 @@
 									<div class="swiper-wrapper">
 
                                         <?php
-                                        $rec_query="select * from post where valid='1' and check_status='1' and category like 'Recommend%' order by seen desc limit 0,6";
+                                        $rec_query="select * from post where pic1!='' and valid='1' and check_status='1' and category like 'Recommend%' order by seen desc limit 0,6";
                                         $res_rec=mysql_query($rec_query);
 
 
@@ -366,43 +337,7 @@
                                             <?php
                                         }
 
-?><!--
-
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>-->
+?>
 									</div>
 								</div>
 							</div>
@@ -431,7 +366,7 @@
                         <!--热门商家-->
                         <div class="sy_title">
                             <span class="left">Q&A</span>
-                            <a href="blog/index.php?category=Q&A" class="fr morethree">More&gt;&gt;</a>
+                            <a href="blog/index.php?category=Q&A&sort=seen" class="fr morethree">More&gt;&gt;</a>
                         </div>
                         <div class="sy_hot_seller">
                             <div class="sy_limit_buy mb10">
@@ -439,7 +374,7 @@
                                     <div class="swiper-wrapper">
 
                                         <?php
-                                        $rec_query_1_q="select * from post where valid='1' and check_status='1' and category like 'Q&A%' order by seen desc limit 0,6";
+                                        $rec_query_1_q="select * from post where pic1!='' and valid='1' and check_status='1' and category like 'Q&A%' order by seen desc limit 0,6";
                                         $res_rec_1_q=mysql_query($rec_query_1_q);
 
 
@@ -465,43 +400,7 @@
                                         <?php
                                         }
 
-                                        ?><!--
-
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>-->
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -511,7 +410,7 @@
                         <!--热门商家-->
                         <div class="sy_title">
                             <span class="left">Events</span>
-                            <a href="blog/index.php?category=Event" class="fr morethree">More&gt;&gt;</a>
+                            <a href="blog/index.php?category=Event&sort=seen" class="fr morethree">More&gt;&gt;</a>
                         </div>
                         <div class="sy_hot_seller">
                             <div class="sy_limit_buy mb10">
@@ -519,7 +418,7 @@
                                     <div class="swiper-wrapper">
 
                                         <?php
-                                        $rec_query_1="select * from post where valid='1' and check_status='1' and category like 'Event%' order by seen desc limit 0,6";
+                                        $rec_query_1="select * from post where pic1!='' and valid='1' and check_status='1' and category like 'Event%' order by seen desc limit 0,6";
                                         $res_rec_1=mysql_query($rec_query_1);
 
 
@@ -545,43 +444,92 @@
                                         <?php
                                         }
 
-                                        ?><!--
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--热门商家end-->
 
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>
-										<div class="box swiper-slide">
-											<a href="#">
-												<img src="img/thumb_5745110bbc27c.jpg" width="114" height="114">
-												<p class="txt_center overflow_clear">菲诗小铺</p>
-												<p class="fontcl2">Hangzhou<small class="ml10 fr black9">seen 134</small></p>
-											</a>
-										</div>-->
+                        <!--热门商家-->
+                        <div class="sy_title">
+                            <span class="left">Marketing</span>
+                            <a href="blog/index.php?category=Market&sort=seen" class="fr morethree">More&gt;&gt;</a>
+                        </div>
+                        <div class="sy_hot_seller">
+                            <div class="sy_limit_buy mb10">
+                                <div class="locatLabel_switch swiper-container6 swiper-container-horizontal swiper-container-free-mode swiper-container-android">
+                                    <div class="swiper-wrapper">
+
+                                        <?php
+                                        $rec_query_mar="select * from post where pic1!='' and valid='1' and check_status='1' and category like 'Market%' order by seen desc limit 0,6";
+                                        $res_rec_mar=mysql_query($rec_query_mar);
+
+
+
+                                        while ($row2_m=mysql_fetch_array($res_rec_mar,MYSQL_ASSOC)) {
+
+                                            $postid=$row2_m['id'];
+                                            $title=$row2_m['title'];
+                                            $pic1=$row2_m['pic1'];
+
+                                            ?>
+
+                                            <div class="box swiper-slide">
+                                                <a href="blog/singlepage.php?postid=<?php echo $postid  ?>">
+                                                    <img src="blog/<?php echo $pic1  ?>" width="114" height="114">
+                                                    <p class="txt_center overflow_clear"><?php echo $title  ?></p>
+                                                    <p class="fontcl2"><?php echo $row2_m['current_price']  ?>
+                                                    </p>
+                                                </a>
+                                            </div>
+
+                                            <?php
+                                        }
+
+                                        ?>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <!--热门商家end-->
+
+                        <!--热门商家-->
+                        <div class="sy_title">
+                            <span class="left">Others</span>
+                            <a href="blog/index.php?category=Other&sort=seen" class="fr morethree">More&gt;&gt;</a>
+                        </div>
+                        <div class="sy_hot_seller">
+                            <div class="sy_limit_buy mb10">
+                                <div class="locatLabel_switch swiper-container6 swiper-container-horizontal swiper-container-free-mode swiper-container-android">
+                                    <div class="swiper-wrapper">
+
+                                        <?php
+                                        $rec_query_oth="select * from post where pic1!='' and valid='1' and check_status='1' and category like 'Other%' order by seen desc limit 0,6";
+                                        $res_rec_oth=mysql_query($rec_query_oth);
+
+
+
+                                        while ($row2_o=mysql_fetch_array($res_rec_oth,MYSQL_ASSOC)) {
+
+                                            $postid=$row2_o['id'];
+                                            $title=$row2_o['title'];
+                                            $pic1=$row2_o['pic1'];
+
+                                            ?>
+
+                                            <div class="box swiper-slide">
+                                                <a href="blog/singlepage.php?postid=<?php echo $postid  ?>">
+                                                    <img src="blog/<?php echo $pic1  ?>" width="114" height="114">
+                                                    <p class="txt_center overflow_clear"><?php echo $title  ?></p>
+
+                                                </a>
+                                            </div>
+
+                                            <?php
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>

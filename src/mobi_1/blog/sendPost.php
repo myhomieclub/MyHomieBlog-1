@@ -38,6 +38,7 @@ Send Post
 
 <?php
     @session_start();
+    
     function httpGet($url, $data=array(), $header=array(), $timeout=30){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
@@ -313,7 +314,7 @@ function chooseImage(){
                    
                    
                    var localChosenPicNum=0;
-                   
+                 
                    
                    if (localIds[0]!=null) localChosenPicNum++;
                    if (localIds[1]!=null) localChosenPicNum++;
@@ -376,9 +377,29 @@ function clearPics(){
     
 }
 
+function keypress1() //text输入长度处理
+{
+    var text1 = document.getElementById("title").value;
+    var len = 30 - strLength(text1);
+    if(len<0){
+        var i=0;
+        for(i=0;i<text1.length;i++){
+            var temp=text1.substr(0, i);
+            if(strLength(temp)>30){
+                break;
+            }
+        }
+        document.getElementById("title").value = text1.substr(0, i-1);
+        len=30 - strLength(text1.substr(0, i-1));
+    }
+    var show = "You can still input " + len + " characters.";
+    document.getElementById("name").innerText = show;
+}
 
-
-
+function strLength(str){
+    var reg = /[^\x00-\xff]/g;//匹配汉字
+    return Math.round(str.replace(reg,"**").length);
+}
 
 
 </script>
@@ -410,10 +431,17 @@ function clearPics(){
 <input id="categories" type="text"  value="" name="catg_temp"  placeholder="Choose a category" />
 <i class="iconfont icon-xiala fr" ></i>
 </div>
+
+
+
 <div class="czhi clearfloat box-s">
 <p>Title</p>
-<input type="text" id="title" value="" name="title"  style="-webkit-user-select: text" placeholder=" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is title" required/>
+<input type="text" id="title" value="" name="title" onblur="keypress1()" onkeyup="keypress1()" style="-webkit-user-select: text" placeholder=" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is title" required/>
 </div>
+    <!--title字数限制30个字-->
+    <center><font color="gray"><label id="name">You can still input 30 characters.</label></font></center>
+
+
 <div class="czhi clearfloat box-s" id="old_price" >
 <p class="dtit">Old Price ¥</p>
 <input type="tel"  value="" name="original_price" style="-webkit-user-select: text" placeholder="(optional)" />
@@ -432,8 +460,9 @@ function clearPics(){
 <a href="GdMap/map.html"><p>Location</p></a>
 <input type="text"  value="" name="location" style="-webkit-user-select: text" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional)" />
 </div>
+
 <div class="czhi clearfloat box-s">
-<textarea id="content" class="border-radius:0; smallInput "  rows=10 cols=41 placeholder="This is content" name="content" style="-webkit-user-select: text" required></textarea>
+<textarea id="content" class="border-radius:0; smallInput "  rows=10 cols=41 placeholder="This is content" name="content"  style="-webkit-user-select: text" required></textarea>
 </div>
 
 
@@ -478,7 +507,6 @@ LINE-HEIGHT:   normal}
 }
 </style>
 
-
 <script type="text/javascript">
 
 
@@ -490,18 +518,12 @@ LINE-HEIGHT:   normal}
                 value: '2nd-hand',
                 text: '2nd-hand'
             }
-            <?php
-                if ($_SESSION['isadmin']=='1'){
-
-                ?>
+            <?php if ($_SESSION['isadmin']=='1'){ ?>
                 , {
                     value: 'Recommended',
                     text: 'Recommended'
                 }
-                <?php
-                }
-
-                ?>
+                <?php } ?>
             , {
                 value: 'Q&A',
                 text: 'Q&A'
@@ -618,11 +640,38 @@ function appear(){
         
     }
     
-    
-    
-    
-    
+    /**
+     * 自动填写用户地址
+     * @date    2018-02-04
+     * @another joseph
+     */
+    if (!$('#location_id').is(":hidden")) {
+        $.ajax({
+            url: 'GdMap/uploadAddress.php?type=location',
+            type: 'GET',
+            dataType: 'text'
+        })
+            .done(function(returnValue) {
+                console.log(returnValue);
+                $('#location_id>input').val(returnValue);
+            })
+            .fail(function(msg) {
+                console.log(msg);
+            });
+    }else {
+        console.log("error");
+    }
+
+
+
 }
+
+/**
+ * 用户从地图跳回该页面时显示隐藏列表
+ * @date    2018-02-04
+ * @another joseph
+ */
+appear();
 
 
 
@@ -636,7 +685,7 @@ function submit_check()
     if (userResult=='') alert("Please choose a category! ");
     else if (title=='') alert("Please fill in the title! ");
     else if (content=='') alert("Please fill in the content! ");
-    else if (title.length>=30) alert("Title should be less than 30 characters! ");
+    //else if (title.length>=30) alert("Title should be less than 30 characters! ");
     else document.forms[0].submit();
     
 }

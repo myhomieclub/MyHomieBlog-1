@@ -32,7 +32,7 @@
     require_once("connect.php");
 
 
-    $query_get_posts_records = "select post.id,post.title,user.nickname,comment.created_time from post,user,comment where comment.postid=post.id and post.author='$userid' and comment.author=user.id and comment.valid='1' and post.valid='1' and post.check_status='1' order by comment.id desc; ";
+    $query_get_posts_records = "select post.id,post.title,user.nickname,user.headimg,comment.content,comment.created_time from post,user,comment where comment.postid=post.id and post.author='$userid' and comment.author=user.id and comment.valid='1' and post.valid='1' and post.check_status='1' order by comment.id desc; ";
     $result = mysql_query($query_get_posts_records);
 
 
@@ -45,21 +45,20 @@
 		<header class="hasManyCity hasManyCitytwo" id="header">
 			<a href="javascript:history.go(-1)" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
 			<div class="header-tit">
-				Records of Received Comments
+				Received Comments
 			</div>		
 		</header>
-	    <!--header end-->
 	    <div id="container">		
 			<div id="main">
 			    <div class="warp warpthree clearfloat">
 			    	<div class="account clearfloat">
-			    		<div class="top clearfloat">
+			    		<!--div class="top clearfloat">
 			    			<ul>
 			    				<li class="box-s">Title</li>
 			    				<li>Commented By</li>
 			    				<li>Time</li>
 			    			</ul>
-			    		</div>
+			    		</div-->
 			    		<div class="list clearfloat box-s">
 
 
@@ -71,12 +70,21 @@
                             ?>
 
                                 <a href="blog/singlepage.php?postid=<?php echo $postid ?>">
-                                    <div class="shang clearfloat">
+                                    <div class="commentlist clearfloat">
                                         <ul style="height:auto">
-                                            <li class="box-s" style="font-size:.1rem;height:auto"><?php echo $row['title'] ?>
+                                            <li class="box-s" style="position:relative;">
+                                                <div style="width:.45rem; height:.45rem;background-color:#aaa;overflow:hidden;float:left;position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;"> 
+                                                    <img src="<?php echo $row['headimg'] ?>"/>     
+                                                </div>
+                                            </li>  
+                                            <li>
+                                                <div style="height: 100%;">
+                                                    <p><?php echo $row['nickname'] ?></p>
+                                                    <p style="font-size: 0.16rem;color: #000;height:0.19rem;line-height: 0.22rem;"><?php echo $row['content'] ?></p>
+                                                    <p style="line-height: 0.22rem;"><?php echo $row['created_time'] ?></p>
+                                                </div>
                                             </li>
-                                            <li style="height:auto"><?php echo $row['nickname'] ?></li>
-                                            <li style="font-size:.1rem;height:auto"><?php echo $row['created_time'] ?></li>
+                                            <li class="box-s" style="font-size:.15rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><?php echo $row['title'] ?></li>
                                         </ul>
                                     </div>
                                 </a>
@@ -86,45 +94,8 @@
 
                             mysql_free_result($result);
                             mysql_close();
-
-
-
-
-
-
                             ?>
-							<!--<a href="#">
-								<div class="shang clearfloat">
-									<ul style="height:auto">
-										<li class="box-s" style="font-size:.1rem;height:auto"  >this is a good one </li>
-										<li style="height:auto">Bill Gates</li>
-										<li style="font-size:.1rem;height:auto">2016-07-23 13:29:47</li>
-									</ul>
-								</div>
-							</a>
-							<a href="#">
-								<div class="shang clearfloat">
-									<ul style="height:auto">
-										<li class="box-s" style="font-size:.1rem;height:auto"  >I need help with Java</li>
-										<li style="height:auto">Mohammed</li>
-										<li style="font-size:.1rem;height:auto">2016-07-23 13:29:47</li>
-									</ul>
-								</div>
-							</a>
-							<a href="#">
-								<div class="shang clearfloat">
-									<ul style="height:auto">
-										<li class="box-s" style="font-size:.1rem;height:auto"  >I need help with my Chinese.( Title can be shown totally.) </li>
-										<li style="height:auto">Serfano Sebastaiani</li>
-										<li style="font-size:.1rem;height:auto">2016-07-23 13:29:47</li>
-									</ul>
-								</div>
-							</a>-->
-							<!--
-			    			<div class="bottom clearfloat">
-			    				<span class="fl">2016-07-10 </span>
-			    				<p class="fr">剩余积分：7400</p>
-			    			</div>-->
+							
 			    		</div>	    		
 			    	</div>
 			    </div>

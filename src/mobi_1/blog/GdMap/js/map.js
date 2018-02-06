@@ -1,8 +1,8 @@
-var marker, defaultLang = 'en', result = '';
+﻿var marker, defaultLang = 'en', result = '';
 
 /**
  * 加载地图，调用浏览器定位服务
- * 
+ *
  */
 //实例化地图
 var map = new AMap.Map('container', {
@@ -28,6 +28,7 @@ map.plugin('AMap.Geolocation', function() {
 //解析定位错误信息
 function onError(data) {
     //alert("定位失败");
+    console.log(data);
 }
 
 
@@ -74,9 +75,9 @@ function ready() {
         pageSize: 5,
         pageIndex: 1,
         map: map,
-        panel: "poiList"
+        panel: "poiList",
+        lang: defaultLang
     });
-    placeSearch.setLang(defaultLang);
     //监听搜索框的提示选中事件
     AMap.event.addListener(auto, "select", function(e) {
         //设置搜索的城市
@@ -103,13 +104,13 @@ function ready() {
     //监听marker/列表的选中事件
     AMap.event.addListener(placeSearch, 'selectChanged', function(results) {
         //获取当前选中的结果数据
-        console.log(results.selected.data);
         var data = results.selected.data;
-        map.setCenter(results.location);
-        var submit = document.getElementById('submit');
-        Amap.event.addListener(submit, 'click', function(data){
-            window.location.href = '../sendPost.php?value=' + json.stringify(data);
-        })
+        if(confirm("您确定选择该地址吗?")){
+            submitAddress(data.name, data.location);
+        }
+        else{
+            return 0;
+        }
     });
     AMap.event.addListener(map, 'click', function(){
         placeSearch.clear();
@@ -119,7 +120,7 @@ function ready() {
         placeSearch.clear();
         $('#panel').addClass('hidden');
         checkPoiList();
-    })
+    });
     $('#clearSearchBtn').click(function() {
         //清除搜索框内容
         $('#tipinput').val('');
@@ -133,43 +134,87 @@ function ready() {
 
 /**
  * 添加热点点击事件
- * 
+ *
  */
 map.on('hotspotclick', function(result) {
-    rmMarker();
     map.setCenter(result.lnglat);
-    addMarker(result.lnglat);
-    var placeSearch = new AMap.PlaceSearch({map: map});
-    placeSearch.setLang(defaultLang);
+    var placeSearch = new AMap.PlaceSearch({
+        map: map,
+        lang: defaultLang
+    });
     placeSearch.getDetails(result.id, function(status, result) {
         if (status === 'complete' && result.info === 'OK') {
-            //显示结果列表
-            $('#one_panel').removeClass('hidden');
-            //隐藏loading状态
-            $(document.body).removeClass('searching');
             var poiArr = result.poiList.pois;
-            createContent(poiArr[0]);
+            AMapUI.loadUI(['overlay/SimpleInfoWindow'], function(SimpleInfoWindow){
+                poi = poiArr[0];
+                address = translate(poi.address);
+
+                title = '<strong>' + address + '</strong>';
+                content = setInfoWindowContent(poi);
+
+                var infoWindow = new SimpleInfoWindow({
+
+                    closeWhenClickMap: true,
+                    autoMove: true,
+                    showShadow: true,
+                    infoTitle: title,
+                    infoBody: content
+                });
+
+                //构建自定义信息窗体的内容
+                function setInfoWindowContent(poi){
+                    var content = '<div id="poi-item">';
+                    if (poi.address || poi.tel) {
+                        if (poi.address) {
+                            content += '<p class="poi-addr">address：' + address + '</p>';
+                        }
+                        if (poi.del) {
+                            content += '<p class="poi-del">tel：' + poi.del + '</p>';
+                        }
+                    }
+                    content += '<button id = "submit">Done</button></div>';
+
+                    return content;
+                }
+
+                infoWindow.open(map, poi.location);
+
+                $(document).on('click', '#submit', function() {
+                    submitAddress(address, poi.location);
+                });
+            });
         }
-        AMap.event.addListener(map, 'click', function(){
-            $('#one_panel').addClass('hidden');
-            //rmMarker();
-        })
     });
 });
 
-//为信息列表添加内容
-function createContent(poi) { //信息窗体内容
-    $('#one_panel li h3 .poi-name').text(poi.name);
-    $('#one_panel .poi-info p').remove();
-    if (poi.address || poi.tel) {
-        if (poi.address) {
-            $('#one_panel .poi-info').append('<p class="poi-addr">地址：' + poi.address + '</p>');
-        }
-        if (poi.del) {
-            $('#one_panel .poi-info').children('poi-info').append('<p class="poi-del">电话：' + poi.del + '</p>');
-        }
-    }
+
+/**
+ * [submitAddress 地址上传]
+ * @date    2018-02-02
+ * @another joseph
+ * @param   string     name        地理位置名称
+ * @param   c          location    地理位置经纬度信息
+ */
+function submitAddress(name, location){
+    $.ajax({
+        url: 'uploadAddress.php',
+        type: 'POST',
+        async: false,
+        dataType: 'text',
+        data: {address: name, lng: location['lng'], lat: location['lat']}
+    })
+        .done(function(returnValue) {
+            console.log(returnValue);
+            setTimeout(console.log('wait a second'), 1000);
+            window.history.go(-1);
+        })
+        .fail(function(msg) {
+            console.log(msg);
+            window.history.go(-1);
+        });
+
 }
+
 //清除点标记
 function rmMarker(){
     if (marker) {
@@ -181,6 +226,7 @@ function rmMarker(){
 $("#tipinput").focus(function(event) {
     rmMarker();
     $("#one_panel").addClass('hidden');
+    map.clearInfoWindow();
 });
 
 //添加点标记
@@ -194,8 +240,8 @@ function addMarker(data){
 
 /**
  * 为地图添加语言切换功能
- * 
  */
+
 //给切换语言按钮绑定dom监听事件
 ['en', 'zh_cn'].forEach(function(btn) {
     var button = document.getElementById(btn);
@@ -207,12 +253,4 @@ function clickListener() {
     //构造地点查询类
     map.setLang(this.id);
     defaultLang = this.id;
-};
-
-/**
- * 为提交按钮添加点击事件
- */
-var subBth = document.getElementById('submit');
-AMap.event.addDomListener(subBth, 'click', function(){
-    console.log(result);
-})
+}

@@ -24,7 +24,7 @@
     <?php
 @session_start();
 $nickname=$_SESSION['nickname'];
-$tel=$_SESSION['tel'];
+$signature=$_SESSION['signature'];
 $headimg=$_SESSION['headimg'];
 $userid=$_SESSION['userid'];
     require_once("connect.php");
@@ -41,7 +41,7 @@ $userid=$_SESSION['userid'];
     }
 
     //comments num
-    $query_comments="select count(*) from comment where author='$userid' and valid='1'";
+    $query_comments="select count(comment.id) from comment,post where comment.author='$userid' and comment.postid=post.id and check_status='1' and comment.valid='1' and post.valid='1'";
     $rqst2=mysql_query($query_comments,$conn);
     if (mysql_num_rows($rqst2)) {
         $result_comments = mysql_fetch_array($rqst2);
@@ -60,6 +60,14 @@ $userid=$_SESSION['userid'];
         $msgs=0;
     }
 
+
+    $admin_check="select * from admin where userid='$userid'";
+
+    $rqst_admin=mysql_query($admin_check);
+    $result_admin=mysql_fetch_array($rqst_admin,MYSQL_ASSOC);
+    $id_admin=$result_admin['id'];
+    if ($id_admin!='')  {$isadmin=true;$_SESSION['isadmin']='1';}
+    else {$isadmin=false;}
 
 
 mysql_close();
@@ -95,25 +103,17 @@ mysql_close();
         }
     }
     ?>
-
-
-
-
-
-
-
-
 	<body>
-		<!--header star-->
+		<!--header star--
 		<header class="hasManyCity hasManyCitytwo" id="header">
 			<a href="javascript:history.go(-1)" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
 			<div class="header-tit">
 				Profile
 			</div>
 			<a href="setup.php" class="fr shoucang sousuo"><i class="iconfont icon-shezhi"></i></a>
-			<a href="ChatHistory.php" class="fr shoucang sousuo"><i class="iconfont icon-kefu1"></i></a>
+			<a href="messages.php" class="fr shoucang sousuo"><i class="iconfont icon-kefu1"></i></a>
 		</header>
-	    <!--header end-->
+	    -header end-->
 	    <div id="container">		
 			<div id="main">
 			    <div class="warp clearfloat">
@@ -125,7 +125,11 @@ mysql_close();
 			    		</div>
 			    		<div class="content clearfloat fl">
 			    			<p class="hname"><?php echo $nickname ?></p>
-			    			<p class="htel"><?php echo $tel ?></p>
+			    			<p class="hsig"><?php echo $signature ?></p>
+			    		</div>
+			    		<div class="right clearfloat fl">
+			    		    <a href="setup.php" class="fr shoucang sousuo"><i class="iconfont icon-shezhi"></i></a>
+		                	<!--a href="messages.php" class="fr shoucang sousuo"><i class="iconfont icon-kefu1"></i></a-->
 			    		</div>
 			    		<div class="h-bottom clearfloat">
 			    			<samp></samp>
@@ -151,147 +155,26 @@ mysql_close();
 			    			</ul>
 			    		</div>
 			    	</div>
-			    	<div class="cash clearfloat">
-			    		<div class="cash-tit clearfloat box-s">
-			    			My Posts
-			    		</div>
-			    		<div class="shang clearfloat">
-			    			<ul>
-			    				<li>
-			    					<a href="blog/index.php?category=2nd-hand&sort=mine">
-			    						<img src="img/a2.png"/>
-			    						<span>2nd-hand</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="blog/index.php?category=event&sort=mine">
-			    						<img src="img/event.png"/>
-			    						<span>Event</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="blog/index.php?category=recommend&sort=mine">
-			    						<img src="img/b2.png"/>
-			    						<span>Recommended</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="blog/index.php?category=question&sort=mine">
-			    						<img src="img/a1.png"/>
-			    						<span>Q&A</span>
-			    					</a>
-			    				</li>
-			    				<li>
-									<a href="blog/index.php?category=market&sort=mine">
-										<img src="img/marketing-promote copy.png"/>
-										<span>Marketing</span>
-									</a>
-								</li>
-								<li>
-									<a href="blog/index.php?sort=mine">
-										<img src="img/b8.png"/>
-										<span>All of Mine</span>
-									</a>
-								</li>
-			    			</ul>
-			    		</div>
-			    	</div>
-			    	
-			    	<!--<div class="cash clearfloat">
-			    		<div class="cash-tit clearfloat box-s">
-			    			收藏关注
-			    		</div>
-			    		<div class="shang xia clearfloat">
-			    			<ul>
-			    				<li>
-			    					<a href="tuan.html">
-			    						<p><i class="iconfont icon-tuangou"></i></p>
-			    						<span>团购收藏</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="mall.html">
-			    						<p><i class="iconfont icon-baihuo"></i></p>
-			    						<span>百货收藏</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="remen.html">
-			    						<p><i class="iconfont icon-shangjia"></i></p>
-			    						<span>关注商家</span>
-			    					</a>
-			    				</li>
-			    			</ul>
-			    		</div>
-			    	</div>
-			    	
-			    	<div class="cash clearfloat">
-			    		<div class="cash-tit clearfloat box-s">
-			    			我的优惠券
-			    		</div>
-			    		<div class="shang clearfloat">
-			    			<ul>
-			    				<li>
-			    					<a href="coupon.html">
-			    						<img src="img/sale1.png"/>
-			    						<span>商家优惠券</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="coupon.html">
-			    						<img src="img/sale2.png"/>
-			    						<span>平台优惠券</span>
-			    					</a>
-			    				</li>
-			    				<li>
-			    					<a href="member.html">
-			    						<img src="img/sale3.png"/>
-			    						<span>我的会员</span>
-			    					</a>
-			    				</li>
-			    			</ul>
-			    		</div>
-			    	</div>
-			    	-->
-			    	
 			    	<div class="cashlist clearfloat">
 			    		<ul>
                             <li class="box-s">
                                 <a href="manage_posts.php">
-                                    <p class="fl">Manage My Posts</p>
+                                    <p class="fl">My Posts</p>
                                     <i class="iconfont icon-jiantou1 fr"></i>
                                 </a>
                             </li>
 			    			<li class="box-s">
-			    				<a href="records_myposts.php">
-			    					<p class="fl">Records of My Posts</p>
-			    					<i class="iconfont icon-jiantou1 fr"></i>
-			    				</a>
-			    			</li>
-			    			<li class="box-s">
 			    				<a href="records_mycomments.php">
-			    					<p class="fl">Records of My Comments</p>
+			    					<p class="fl">My Comments</p>
 			    					<i class="iconfont icon-jiantou1 fr"></i>
 			    				</a>
 			    			</li>
 			    			<li class="box-s">
 			    				<a href="records_received_comments.php">
-			    					<p class="fl">Records of Received Comments</p>
+			    					<p class="fl">Received Comments</p>
 			    					<i class="iconfont icon-jiantou1 fr"></i>
 			    				</a>
 			    			</li>
-			    			<!--<li class="box-s">
-			    				<a href="history_browse.html">
-			    					<p class="fl">History of Browsing</p>
-			    					<i class="iconfont icon-jiantou1 fr"></i>
-			    				</a>
-			    			</li>-->
-			    			<!--<li class="box-s">
-			    				<a href="sqlianmeng.html">
-			    					<p class="fl">商家入驻</p>
-			    					<i class="iconfont icon-jiantou1 fr"></i>
-			    				</a>
-			    			</li>-->
 			    			<li class="box-s">
 			    				<a href="messages.php">
 			    					<p class="fl">System Messages</p>
@@ -304,8 +187,7 @@ mysql_close();
 			    					<i class="iconfont icon-jiantou1 fr"></i>
 			    				</a>
 			    			</li>
-
-                            <?php if ($_SESSION['isadmin']=='1'){ ?>
+                            <?php if ($isadmin==true){ ?>
                             <li class="box-s">
                                 <a href="admin_functions.php">
                                     <p class="fl">Admin Management</p>
