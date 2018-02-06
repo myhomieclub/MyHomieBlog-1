@@ -56,7 +56,7 @@ $result = mysql_query($query_get_address);
 <header class="hasManyCity hasManyCitytwo" id="header">
     <a href="javascript:history.go(-1)" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
     <div class="header-tit">
-        Posts Management
+        My Posts
     </div>
 </header>
 <div id="container">
@@ -68,6 +68,7 @@ $result = mysql_query($query_get_address);
             $postid=$row['id'];
 
             $title=$row['title'];
+            $pic1=$row['pic1'];
             $content=$row['content'];
             $time=$row['created_time'];
             $status=$row['check_status'];
@@ -80,33 +81,29 @@ $result = mysql_query($query_get_address);
 
 
             <div class="addlist clearfloat">
+           
                 <div class="top clearfloat box-s">
-                    <ul>
-                        <li>
-                            <span class="fl"><?php echo $title ?></span>
-                            <span class="fr"><?php echo $time ?></span>
-                        </li>
-                        <li style="width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-                            <?php echo $content ?>
-                        </li>
+                    <ul> 
+                        
+                            <li style="overflow:hidden">
+                                <img src="<?php echo $row['pic1'] ?>"/>
+                            </li>
+                            <li>
+                                <p style="font-size: 18px; color: #000;"><?php echo $title ?></p>
+                                <p style="font-size: 10px; color: #666;height:16px; line-height: 16px;"><?php echo $time ?></p>
+                                <p style="font-size: 14px; color: #111;"><?php echo $content ?></p>
+                            </li>
+                        
+                            <li>
+                                <p class="mradd fl"><?php echo $status_word ?></p>
+                                <div class="right fr clearfloat">
+                                    <a href="delete-post.php?postid=<?php echo $postid ?>" onclick="javascript:return delete_confirm()">
+                                           <i class="iconfont icon-lajixiang icon-shanchutwo"></i>
+                                           Delete
+                                    </a>
+                                </div> 
+                            </li>
                     </ul>
-                </div>
-                <div class="bottom clearfloat box-s">
-                    <section class="shopcar clearfloat">
-                        <div class="list listtwo clearfloat">
-                            <div class="xuan xuantwo clearfloat fl">
-
-                            </div>
-
-                            <span class="mradd fl"><?php echo $status_word ?></span>
-                            <div class="right fr clearfloat">
-                                <a href="delete-post.php?postid=<?php echo $postid ?>" class="fr" onclick="javascript:return delete_confirm()">
-                                    <i class="iconfont icon-lajixiang icon-shanchutwo"></i>
-                                    Delete
-                                </a>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </div>
 
@@ -122,51 +119,18 @@ $result = mysql_query($query_get_address);
 
 
         ?>
-        <!--
-        <div class="addlist clearfloat">
-            <div class="top clearfloat box-s">
-                <ul>
-                    <li>
-                        <span class="fl">John Doe</span>
-                        <span class="fr">1303505****</span>
-                    </li>
-                    <li>
-                        Pinfeng campus,ZJUT,Hangzhou,Zhejiang,China
-                    </li>
-                </ul>
-            </div>
-            <div class="bottom clearfloat box-s">
-                <section class="shopcar clearfloat">
-                    <div class="list listtwo clearfloat">
-                        <div class="xuan xuantwo clearfloat fl">
-                            <div class="radio" >
-                                <label>
-                                    <input type="checkbox" name="sex" value="" />
-                                    <div class="option"></div>
-                                </label>
-                            </div>
-                        </div>-->
-
-        <!--<span class="mradd fl">Default</span>-->
-        <!--<div class="right fr clearfloat">
-            <a href="#" class="fr">
-                <i class="iconfont icon-lajixiang icon-shanchutwo"></i>
-                Delete
-            </a>
-            <a href="#" class="fr">
-                <i class="iconfont icon-bianji bianjittt"></i>
-                Edit
-            </a>
-        </div>
-        </div>
-    </section>
-</div>
-</div>-->
-
 
 
     </div>
     <a href="blog/sendPost.php" class="address-add fl">
+        Create New Post
+    </a>
+</div>
+<br>
+<br>
+</body>
+</html>
+add fl">
         Create New Post
     </a>
 </div>

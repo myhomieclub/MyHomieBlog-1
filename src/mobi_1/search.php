@@ -29,7 +29,7 @@
     $userid=$_SESSION['userid'];
     $query_get_history="select * from search where userid='$userid' and valid='1'";
     $resource=mysql_query($query_get_history);
-    $query_top_search="select keyword from search GROUP by keyword ORDER BY search_count DESC limit 6";
+    $query_top_search="select keyword from search GROUP by keyword ORDER BY sum(search_count) DESC limit 6";
     $result_top=mysql_query($query_top_search);
 
     ?>
@@ -39,13 +39,13 @@
 
 
 	<body>
-    <header class="hasManyCity hasManyCitytwo" id="header">
+   <!--   <header class="hasManyCity hasManyCitytwo" id="header">
         <a href="javascript:history.go(-1)" class="fl fanhui"><i class="iconfont icon-fanhui"></i></a>
         <div class="header-tit">
             Search...
         </div>
     </header>
-    <br><br><br><br>
+    <br><br><br><br>-->
 		<div id="container">
 			<section class="searchBar wap">
 				<div class="searchBox">
@@ -53,6 +53,9 @@
                         <input type="hidden" name="search" value="1">
 						<input type="search" id="keyword" name="keyword" placeholder="Search.." style="-webkit-user-select: text" autocomplete="off">
 					</form>
+				</div>
+				<div class="cancelBox">
+				    <a href="javascript:history.go(-1)" class="fl fanhui">Cancel</a>
 				</div>
 				<div class="voiceBtn"></div>
 			</section>

@@ -5145,11 +5145,26 @@ label {
 	border: 1px solid #E1E1E1;
 	height: 36px;
 	border-radius: 5px;
-	width: 100%;
+	width: 80%;
 	margin: 7px 0 0 15px;
 	background-color: #fff;
 }
-
+.searchBar .cancelBox{
+	border: 1px solid #E1E1E1;
+	height: 36px;
+	border-radius: 5px;
+	width: 20%;
+	margin: 7px 0 0 5px;
+	text-align: center;
+	line-height: 36px;	
+}
+.searchBar a{
+	width: 100%;
+	font-size:16px;
+	font-color:#111;
+    text-align: center;
+	line-height: 36px;
+}
 .searchBar .searchBox input {
 	background: url(../img/searchone.png) no-repeat;
 	background-size: 16px;
@@ -5260,21 +5275,34 @@ label {
 .h-top {
 	width: 100%;
 	background-color: #06c1ae;
-	padding: 5% 5% 20% 15%;
+	padding: 5% 5% 18% 5%;
 	position: relative;
 }
 
 .h-top .tu {
-	width: 20%;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
 }
 
 .h-top .tu img {
 	width: 100%;
 }
-
+.h-top .right{
+	width: 25px;
+	height: 80px;
+	top: 20px;
+	right: 20px;
+	position: absolute;
+}
+.h-top .right i{
+	color: #fff; 
+	font-size: 20px;
+}
 .h-top .content {
-	width: 60%;
-	margin-left: 5%;
+	width: 70%;
+	height: 80px;
+	padding: 4% 5% 4% 4%;
 }
 
 .h-top .content p {
@@ -5283,10 +5311,16 @@ label {
 }
 
 .h-top .content p.hname {
-	font-size: .15rem;
+	font-size: .22rem;
 }
 
-.h-top .content p.htel,
+.h-top .content p.hsig{
+	margin-top: 10px;
+	font-size: .14rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 .h-top .content p.hpthy {
 	font-size: .14rem;
 }
@@ -5410,6 +5444,8 @@ label {
 .cashlist {
 	width: 100%;
 	margin-bottom: 4%;
+	border-top: 0.01rem solid #e9e9e9;
+	margin-top:4%;
 	background-color: #fff;
 }
 
@@ -5486,8 +5522,8 @@ a.center-btn {
  * */
 .account{width: 100%;}
 .account .top{height: .5rem; width: 100%; background-color: #06c1ae;}
-.account .top ul li{text-align: center; width: 30%; float: left; height: .5rem; line-height: .5rem; font-size: .15rem; color: #fff;}
-.account .top ul li:first-child{width: 40%; text-align: left; padding-left: 3%;}
+.account .top ul li{text-align: center; width: 33.33%; float: left; height: .5rem; line-height: .5rem; font-size: .15rem; color: #fff;}
+.account .top ul li:first-child{width: 33.33%; text-align: center; padding-left: 3%;}
 .account .list{padding-left: 3%; background-color: #fff; margin-bottom: 3%;}
 .account .list .shang{width: 100%; border-bottom: 1px solid #dcdcdc;}
 .account .list .shang ul li{height: .5rem; line-height: .5rem; text-align: center; width: 30%; float: left; font-size: .15rem; color: #333333;}
@@ -5498,6 +5534,14 @@ a.center-btn {
 .account .list .bottom{width: 100%; height: .5rem; line-height: .5rem;}
 .account .list .bottom span{color: #636363; font-size: .15rem;}
 .account .list .bottom p{color: #fe6e1e; font-size: .15rem; margin-right: 3%;}
+
+.account .list .commentlist{width: 100%; border-bottom: 1px solid #dcdcdc;}
+.account .list .commentlist p{font-size: 0.1rem;height:0.17rem;padding: 0px;margin-top: 0px;line-height: 0.2rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.account .list .commentlist img{width:100%;display: block;}
+.account .list .commentlist ul li{height: .54rem; line-height: .54rem; text-align: left; margin:1% 2% 1% 0; width: 60%; float: left; font-size: .1rem; color: #333333;}
+.account .list .commentlist ul li:first-child{text-align: left; width: .45rem;height: .54rem;}
+.account .list .commentlist ul li:last-child{color: #fe6e1e;width: 20%;font-size: .16rem; text-align: center;position: absolute; right: 10px;}
+
 
 /*优惠券*/
 .notice { width: 100%; overflow: hidden; }
@@ -5670,22 +5714,29 @@ a.morethree{font-size: .13rem; color: #666;}
 /*
  管理收货地址----------------------------------------------------------------------------------
  * */
-.addlist{width: 100%; background-color: #fff; border-top: 1px solid #dcdad3; border-bottom: 1px solid #dcdad3; margin-bottom: 2%;}
-.addlist .top{width: 100%; padding: 5%; border-bottom: 1px solid #dcdad3;}
-.addlist .top ul li{width: 100%; color: #333333; font-size: .15rem; float: left;}
-.addlist .top ul li:last-child{margin-top: .1rem; line-height: .2rem;}
-.addlist .bottom{padding: 0 5%;}
+.addlist{width: 100%; background-color: #fff; border-bottom: 1px solid #dcdad3;}
+.addlist .top{width: 100%; padding: 2%;}
+.addlist .top ul li p{ height: 25px; line-height: 25px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.addlist .top ul li{width: 45%;height:.7rem; color: #333333; font-size: .15rem; float: left;}
+.addlist .top ul li:first-child{width: 30%;height:.7rem; margin-right: 2%;background-color:#ccc; border-radius: .05rem;}
+.addlist .top ul li:last-child{width: 20%;height:.7rem;margin-top: 0;}
+.addlist .top ul li .mradd:{width: 20%; font-size: .13rem; height:.2rem; line-height: .2rem;color: #d24239; margin:0;padding: 0;}
+.addlist .top ul li .right{width: 20%;height:.2rem;line-height: .2rem;}
+.addlist .top ul li .right a{font-size: .14rem; color: #333333; display: block;background-color：#aaa;}
+.addlist .top ul li .right a:first-child{margin-left: 5%;}
+.addlist .top ul li .smradd{color: #333333;}
+.addlist .bottom{width: 100%;padding: 0;}
 .addlist .bottom .shopcar{padding: 0;}
-.addlist .bottom .shopcar{border-bottom: none;}
-.addlist .bottom .mradd{font-size: .15rem; color: #d24239; margin-top: .13rem; margin-left: 2%;}
-.addlist .bottom .right{width: 50%;}
-.addlist .bottom .right a{font-size: .15rem; color: #333333; margin-top: .1rem; display: block;}
-.addlist .bottom .right a:first-child{margin-left: 5%;}
+.addlist .bottom .shopcar{}
+.addlist .bottom .mradd{font-size: .15rem; color: #d24239;display: block;}
+.addlist .bottom .right{width: 50%;display: block;}
+.addlist .bottom .right a{font-size: .15rem; color: #333333; display: block;float:right;}
+.addlist .bottom .right a:first-child{}
 .addlist .bottom .smradd{color: #333333;}
-.shopcar .list .xuantwo{margin-top: .1rem;}
 .shopcar .listtwo,
 .shopcar .listtwo .right{height: auto;}
-.data ul li i{line-height: .5rem;}
+.data ul li i{line-height: .4rem;}
+
 
 /*
  添加新地址----------------------------------------------------------------------------------
@@ -5722,6 +5773,17 @@ a.morethree{font-size: .13rem; color: #666;}
 .hfctent{width: 100%; padding: 3%; background-color: #fff; position: fixed; bottom: 0; left: 0; z-index: 999;}
 .hfctent .text{height: .3rem; width: 85%; line-height: .3rem; font-size: .14rem; color: #333; border: 1px solid #d8d8d8; background-color: #f6f6f6; border-radius: 15px; -webkit-border-radius: 15px; text-indent: 1em;}
 .hfctent .btn{height: .3rem; width: .3rem; -webkit-appearance: none; line-height: .5rem; border: 1px solid #f6f6f6; border-radius: 50%; -webkit-border-radius: 50%; overflow: hidden; background: url(../img/tijiao.png) center no-repeat; background-size: cover;}
+
+
+
+
+
+
+
+
+
+
+iao.png) center no-repeat; background-size: cover;}
 
 
 

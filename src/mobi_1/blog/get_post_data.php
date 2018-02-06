@@ -30,7 +30,7 @@ if ($sort=='latest') $sort_suffix=" order by id desc ";
 if ($sort=='seen') $sort_suffix=" order by seen desc ";
 if ($sort=="high") $sort_suffix=" and current_price is not null and current_price!=''  order by current_price+0 desc ";
 if ($sort=='ai') $sort_suffix=" order by seen and id desc ";
-if ($sort_suffix=="")  $sort_suffix=" order by priority desc";
+if ($sort_suffix=="")  $sort_suffix=" order by priority desc, id desc ";
 
 $city=$_GET['city'];
 $city_suffix="";

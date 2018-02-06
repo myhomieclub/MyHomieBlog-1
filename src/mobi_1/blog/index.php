@@ -43,7 +43,7 @@ if ($sort=='latest') $sort_suffix=" order by id desc ";
 if ($sort=='seen') $sort_suffix=" order by seen desc ";
 if ($sort=="high") $sort_suffix=" and current_price is not null and current_price!=''  order by current_price+0 desc ";
 if ($sort=='ai') $sort_suffix=" order by seen and id desc ";
-if ($sort_suffix=="")  $sort_suffix=" order by priority desc";
+if ($sort_suffix=="")  $sort_suffix=" order by priority desc, id desc";
 
 
 $city=$_GET['city'];
@@ -77,6 +77,9 @@ if ($_GET['search']=='1' and $keyword!='') {
     {
 
         $query="insert into search(userid,created_time,keyword) values('$userid','$send_time','$keyword') ";
+        mysql_query($query);
+    }else{
+        $query="update search set search_count=search_count+1 where userid='$userid' and valid='1' and keyword='$keyword' ";
         mysql_query($query);
     }
 
@@ -310,6 +313,31 @@ $resource=mysql_query($query_get_posts,$conn);
                     if ($curr_price!='') $symbol="¥";
 
 
+                    if ($pic1=='')
+                    {
+                        if ($category=='2nd-hand')
+                        {
+                            $pic1="../img/default_2nd.jpg";
+                        }
+                        else if ($category=='Recommended')
+                        {
+                            $pic1="../img/default_rec.jpg";
+                        }else if ($category=='Event')
+                        {
+                            $pic1="../img/default_eve.jpg";
+                        }else if ($category=='Q&A')
+                        {
+                            $pic1="../img/default_qa.jpg";
+                        }
+                        else if ($category=='Marketing')
+                        {
+                            $pic1="../img/default_mar.jpg";
+                        }
+                        else if ($category=='Others')
+                        {
+                            $pic1="../img/default_oth.jpg";
+                        }
+                    }
 
 
 
@@ -417,6 +445,34 @@ $resource=mysql_query($query_get_posts,$conn);
                                     var postid=data[i]['id'];
                                     var category=data[i]['category'];
 
+                                    if (pic1=='')
+                                    {
+                                        if (category=='2nd-hand')
+                                        {
+                                            pic1="../img/default_2nd.jpg";
+                                        }
+                                        else if (category=='Recommended')
+                                        {
+                                            pic1="../img/default_rec.jpg";
+                                        }else if (category=='Event')
+                                        {
+                                            pic1="../img/default_eve.jpg";
+                                        }else if (category=='Q&A')
+                                        {
+                                            pic1="../img/default_qa.jpg";
+                                        }
+                                        else if (category=='Marketing')
+                                        {
+                                            pic1="../img/default_mar.jpg";
+                                        }
+                                        else if (category=='Others')
+                                        {
+                                            pic1="../img/default_oth.jpg";
+                                        }
+                                    }
+
+
+
                                     var modified_content='<dd><dl class="list"><dd><a href="singlepage.php?postid='+postid+'" class="react"><div class="dealcard"><div class="dealcard-img imgbox"><span></span>'
                                         +'<img src="'+pic1+'"/></div> <div class="dealcard-block-right"> <div class="dealcard-brand single-line">'+title+'</div> <div class="title text-block">'+content+'</div>'
                                         +'<div class="price"> <span class="strong">'+curr_price+'</span> <span class="strong-color">'+symbol+'</span> <span class="tag">'+category+'</span>'
@@ -458,7 +514,7 @@ $resource=mysql_query($query_get_posts,$conn);
     </div>
     <div>
         <a href="index.php">
-            <div class="icon i-5"></div>
+            <div class="icon i-5 on"></div>
             <p>Blog</p>
         </a>
     </div>

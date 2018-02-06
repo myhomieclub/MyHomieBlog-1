@@ -42,9 +42,6 @@ body {
  }
 
  #submit {
-     position: absolute;
-     right: 1%;
-     top: 2%;
      z-index: 999;
  }
 

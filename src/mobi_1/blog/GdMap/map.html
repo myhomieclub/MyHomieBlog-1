@@ -17,7 +17,6 @@
             <div class="del">&#10005;</div>
         </div>
     </div>
-    <input id="submit" type="button" class="disableBth button" disabled="disabled" value="Done">
     <!-- 结果面板 -->
     <div id="panel" class="hidden">
         <!--搜索结果列表 -->
@@ -50,8 +49,13 @@
         <input id="zh_cn" type="button" class="button" value="简体中文" />
     </div>
 </div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=b0446b3b39bdac2770722ebaacbcad94&plugin=AMap.AdvancedInfoWindow"></script>
+<script
+        src="http://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=b0446b3b39bdac2770722ebaacbcad94&plugin=AMap.CitySearch"></script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript" src="js/trans.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
 </body>
 </html>

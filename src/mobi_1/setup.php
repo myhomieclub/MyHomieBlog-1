@@ -73,7 +73,7 @@
 						<li class="clearfloat touxiang">
 							<a href="#">
 								<p class="fl">Photo</p>
-								<i class="fr"><input onchange="javascript:displayImg();" name="headimg" id="file_UserPic" type="file" style="-webkit-user-select: text" accept="image/gif,image/jpg,image/png,image/jpeg" placeholder="Change a pic"><img id="imgUser" src="<?php echo $headimg ?>"/></i>
+								<i class="fr"><input onchange="javascript:displayImg();" name="headimg" id="file_UserPic" type="file" style="-webkit-user-select: text" accept="image/gif,image/jpg,image/png,image/jpeg" placeholder="Change a pic"><img id="imgUser" style="width:50px; height:50px; position: absolute; right:10px; top: 60px;" src="<?php echo $headimg ?>"/></i>
 							</a>
 						</li>
 						<li class="clearfloat">

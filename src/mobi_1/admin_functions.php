@@ -24,7 +24,7 @@
 <?php
 @session_start();
 $nickname=$_SESSION['nickname'];
-$tel=$_SESSION['tel'];
+$sig=$_SESSION['signature'];
 $headimg=$_SESSION['headimg'];
 $userid=$_SESSION['userid'];
 require_once("connect.php");
@@ -80,7 +80,7 @@ mysql_close();
                 </div>
                 <div class="content clearfloat fl">
                     <p class="hname"><?php echo $nickname ?></p>
-                    <p class="htel"><?php echo $tel ?></p>
+                    <p class="htel"><?php echo $sig ?></p>
                 </div>
                 <div class="h-bottom clearfloat">
                     <samp></samp>
